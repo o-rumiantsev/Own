@@ -9,8 +9,8 @@ let rl = readline.createInterface({
   output: process.stdout
 });
 
-rl.question('Set timer: ', (answer) => { // Set the number of minutes and seconds  
-  const date = answer.split(':');        // to be counted to
+rl.question('Set timer: ', (answer) => { // Set the number of minutes and seconds
+  const date = answer.split(':');        // to be counted down to
   rl.close()                             // separeted by a colon
   mins = parseInt(date[0]);
   secs = parseInt(date[1]);
@@ -18,7 +18,7 @@ rl.question('Set timer: ', (answer) => { // Set the number of minutes and second
   timerOn();
 });
 
-const timerOn = () => { 
+const timerOn = () => {
   setInterval(() => timer(), 1000);
 };
 
@@ -32,7 +32,7 @@ function timer() {
     if (secs === -1) {
       mins--;
       secs = 59;
-    };     
+    };
   } else if ((mins > -1) && (secs > 9)){
     writeTimeLeft('0','');
     secs--;
