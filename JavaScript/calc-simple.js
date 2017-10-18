@@ -14,15 +14,16 @@ function calculationLoop() {
     if (answer === 'exit') {
       rl.close()
     } else {
-      const expr = answer.split(' ');
-      rl.pause()
-      doOperation(expr[0], expr[1], expr[2]);
+      console.log(eval(answer));
+    //  const expr = answer.split(' ');
+      rl.pause();
+  //    doOperation(expr[0], expr[1], expr[2]);
       calculationLoop();
     }
   })
 }
 
-function doOperation(a, operator, b) {
+/*function doOperation(a, operator, b) {
   const operand1 = parseFloat(a);
   const operand2 = parseFloat(b);
   switch (operator) {
@@ -55,6 +56,5 @@ const Ops = {
   mult: (a, b) => console.log(a * b),
   div: (a, b) => console.log(a / b),
   divRest: (a, b) => console.log(Math.floor(a / b) + ' rest: ' + (a % b)),
-  power: (a, b) => console.log(Math.pow(a, b)) 
-};
-
+  power: (a, b) => console.log(Math.pow(a, b))
+};*/
