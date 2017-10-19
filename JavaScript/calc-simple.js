@@ -14,7 +14,7 @@ function calculationLoop() {
     if (answer === 'exit') {
       rl.close()
     } else {
-      console.log(eval(answer));
+      console.log(eval(answer.replace(/\b[a-zA-Z]/g,'Math.$&')));
       rl.pause()
       calculationLoop();
     }
