@@ -56,4 +56,4 @@ exports.makeNextIterationGroups = (Obj) => {
     output.writeSolution(result);
     solution('', 1);
   }
-}
+};

@@ -1,7 +1,7 @@
 'use strict';
 
 exports.findDiffPos = (str1, str2, countOfDash) => {
-  let str3 = [''];
+  const str3 = [''];
 
   for (let i = 0; i < str1.length - 1; ++i) {
     if (str1[i] === str2[i]) {
@@ -21,9 +21,8 @@ exports.findDiffPos = (str1, str2, countOfDash) => {
   try {
     if (resultStr.match(/-/g).length !== countOfDash) {
       return undefined;
-    }
-    else {
+    } else {
       return resultStr;
     }
-  } catch(e) {}
-}
+  } catch (e) {}
+};

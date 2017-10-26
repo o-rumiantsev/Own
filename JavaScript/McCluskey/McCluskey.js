@@ -22,10 +22,10 @@ input();
 function input() {
   rl.question('\nВведіть ДДНФ:', (answer) => {
     if (answer === 'exit') {
-      rl.close()
+      rl.close();
     } else {
       separation.toGroups(answer);
-      rl.pause()
+      rl.pause();
       input();
     }
   });

@@ -5,8 +5,7 @@ exports.generateGroup = () => {
   return (key, value) => {
     if (data[key] !== undefined) {
       data[key].push(value);
-    }
-    else {
+    } else {
       data[key] = [value];
     }
     return data;
@@ -23,4 +22,4 @@ exports.addSolution = () => {
     }
     return res;
   };
-}
+};

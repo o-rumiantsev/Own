@@ -1,4 +1,4 @@
-{ 
+{
   "name": "mccluskey",
   "version": "0.0.1",
   "description": "the method of prime implicants realisation",
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/mille-nium/MyCode/issues"
   },
-  "homepage": "https://github.com/mille-nium/MyCode#readme"
+  "homepage": "https://github.com/mille-nium/MyCode#readme",
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-plugin-react": "^7.4.0"
+  }
 }
