@@ -1,0 +1,19 @@
+{ 
+  "name": "mccluskey",
+  "version": "0.0.1",
+  "description": "the method of prime implicants realisation",
+  "main": "McCluskey.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mille-nium/MyCode.git"
+  },
+  "author": "o-rumiantsev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mille-nium/MyCode/issues"
+  },
+  "homepage": "https://github.com/mille-nium/MyCode#readme"
+}
