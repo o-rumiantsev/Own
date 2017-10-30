@@ -1,5 +1,6 @@
 'use strict';
 
+// exports to iteration.js
 exports.findDiffPos = (str1, str2, countOfDash) => {
   const str3 = [''];
 

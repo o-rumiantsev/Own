@@ -1,5 +1,6 @@
 'use strict';
 
+//exports to iteration.js
 exports.deleteSimilar = (Obj) => {
 
   for (const i in Obj) {
@@ -34,8 +35,7 @@ exports.deleteSimilar = (Obj) => {
   return Obj;
 };
 
-// deleteSimilar(S);
-// console.log({S});
+// exports to separation.js
 exports.checkBeenUsed = (arr) => {
   const newArr = arr.map(implic => implic + 'x');
   return newArr;

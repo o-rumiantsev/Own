@@ -1,5 +1,6 @@
 'use strict';
 
+//exports to separation.js and iteration.js
 exports.generateGroup = () => {
   const data = {};
   return (key, value) => {
@@ -12,6 +13,7 @@ exports.generateGroup = () => {
   };
 };
 
+// exports to iteration.js
 exports.addSolution = () => {
   let res = [];
   return (value, condition) => {
