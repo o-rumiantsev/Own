@@ -25,5 +25,5 @@ function toGroups(string) {
   const Groups = group();
   delete Groups.undefined;
 
-  makeNextIterationGroups(Groups, 0);
+  wrap(Groups, 0);
 };
