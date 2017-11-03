@@ -1,7 +1,7 @@
 'use strict';
 
-const compare = require('./compare.js');
 const hash = require('./hash.js');
+const compare = require('./compare.js');
 const sortGroup = require('./sortGroup.js');
 const output = require('./output.js');
 
