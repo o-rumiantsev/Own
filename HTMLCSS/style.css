@@ -5,7 +5,7 @@ body {
 
 .input {
   box-sizing: border-box;
-  background: linear-gradient(#261B0E, #76654E);
+  background: #FEBDBD;
 
   padding-left: 50px;
   padding-top: 80px;
@@ -28,12 +28,12 @@ body {
   display: inline-block;
   height: 100px;
   width: 85%;
-  opacity: 0.5;
   border: 0px;
   border-radius: 5px;
-  color: #504B44;
+  color: #4C4C4C;
   font-size: 44px;
   text-indent: 18px;
+  outline: none;
 }
 
 #button {
@@ -43,17 +43,24 @@ body {
   bottom: 22px;
   height: 100px;
   width: 180px;
-  color: #4F3F2B;
-  background-color: #C7BFB5;
-  border: 2px solid #604B30;
+  border: 0px;
   border-radius: 5px;
+  color: #95F3ED;
+  background-color: #4C4C4C;
   font-family: Arial;
   font-size: 30px;
   outline: none;
 }
 
 #button:hover {
-  color: #C7BFB5;
-  background-color: #4F3F2B;
-  border: 2px solid #C7BFB5;
+  background-color: #4C4C4C;
+  opacity: 0.8;
+}
+
+#manual {
+  margin: 0;
+  color: #4C4C4C;
+  font-family: Arial;
+  font-size: 20px;
+  text-indent: 18px;
 }
