@@ -21,9 +21,9 @@ exports.writeTimetable = (data) => {
     const order = i;
     const name = tomorrow[i]['discipline']['name'];
     let type = tomorrow[i]['type'];
-    type = type === 0 ? ', Лекція, ' :
-           type === 1 ? ', Практика, ' :
-           type === 2 ? ', Лабораторна, ' : '';
+    type = type === 0 ? 'Лекція' :
+           type === 1 ? 'Практика' :
+           type === 2 ? 'Лабораторна' : '';
     let rooms = tomorrow[i]['rooms'];
     let building = '';
     if (rooms[0]) {
@@ -38,7 +38,11 @@ exports.writeTimetable = (data) => {
                          .toString()
                          .replace(/,/g, '$& ');
     } else teachers = '';
-    console.log(`\n${order}) ${name}${type}${rooms}${building}`);
-    if (teachers !== '') console.log(`Викладачі: ${teachers}`);
+    console.log(
+      `\n\x1b[1;37m${order}) \x1b[1;37m${name} \t ${type} \t ${rooms}${building}`
+      );
+    if (teachers !== '') console.log(
+      `\x1b[30;3mВикладачі: ${teachers}\x1b[23m`
+      );
   }
 }
