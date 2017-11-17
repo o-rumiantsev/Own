@@ -25,7 +25,7 @@ const getTimetable = (id) => {
 // encode kytylic symbols
 
 const encode = (string) => {
-  const stringEnc = encodeURIComponent(string);
+  const stringEnc = encodeURIComponent(string.toLowerCase());
   return stringEnc;
 }
 
