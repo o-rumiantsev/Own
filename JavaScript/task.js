@@ -58,6 +58,23 @@ Subject.prototype = {
       }
     }
   }
+  
+}
+const Observe = function(type, context, time) {
+  const Obs = new Subject();
+  let ctx = JSON.stringify(context);
+  Obs.on('change', context, function() {
+    console.log(
+      'Changed to:\n' + JSON.stringify(this, null, 2).replace(/"/g, '')
+    );
+  })
+  setInterval(function() {
+    if (ctx !== JSON.stringify(context)) {
+      Obs.send('change');
+      ctx = JSON.stringify(context);
+    }
+  }, 1000);
+  return Obs;
 }
 
 // <------------- Usage ------------->
@@ -69,14 +86,10 @@ const Rect = {
   width: 50
 }
 
-const Obs = new Subject();
+const obs = Observe('log', Rect);
 
-Obs.limited('info', Rect, 2000, () => {
-  console.log(Rect);
-});
-
-Obs.send('info');
+Rect.x += 10;
 
 setTimeout(() => {
-  Obs.send('info');
-}, 3000);
+  Rect.height = 100;
+}, 5000);
