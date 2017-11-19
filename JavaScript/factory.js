@@ -80,5 +80,8 @@ exports.observe = function(type, path, obj, interval) {
       const Observer = types.object(Obs, obj, interval);
       return Observer;
     }
+    default: {
+      return Obs;
+    }
   }
 };

@@ -1,4 +1,4 @@
-'use sritct';
+'use strict';
 
 const fs = require('fs');
 
@@ -11,7 +11,7 @@ const subscribed = (name, arr) => {
     }
   }
   return false;
-}
+};
 
 exports.file = function(Obs, path, interval) {
   let observing = fs.readFileSync(path, 'utf8');
@@ -35,7 +35,7 @@ exports.file = function(Obs, path, interval) {
   }, interval);
 
   return Obs;
-}
+};
 
 exports.object = function(Obs, context, interval) {
   let ctx = JSON.stringify(context);
@@ -43,7 +43,7 @@ exports.object = function(Obs, context, interval) {
     console.log(
       'Changed to:\n' + JSON.stringify(this, null, 2).replace(/"/g, '')
     );
-  })
+  });
   const int = setInterval(function() {
     if (subscribed('change', Obs.observers)) {
       if (ctx !== JSON.stringify(context)) {
@@ -54,4 +54,4 @@ exports.object = function(Obs, context, interval) {
     } else clearInterval(int);
   }, interval);
   return Obs;
-}
+};

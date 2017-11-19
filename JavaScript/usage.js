@@ -7,7 +7,7 @@ const Rect = {
   y: 0,
   height: 100,
   width: 50
-}
+};
 
 
 const filer = factory.observe('file', './res.json', null, 1000);
