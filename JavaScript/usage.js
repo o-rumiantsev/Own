@@ -1,7 +1,6 @@
 'use strict';
 
 const factory = require('./factory.js');
-const filer = factory.observe('file', './res.json', null, 1000);
 
 const Rect = {
   x: 0,
@@ -11,7 +10,9 @@ const Rect = {
 }
 
 
+const filer = factory.observe('file', './res.json', null, 1000);
 const objecter = factory.observe('object', null, Rect, 1000);
+
 setTimeout(() => {
   Rect.square = Rect.height * Rect.width;
 }, 5000);
