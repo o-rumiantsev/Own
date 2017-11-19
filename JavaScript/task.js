@@ -1,62 +1,54 @@
 'use strict';
 
 const Subject = function() {
-  this.observers = [];
-  this.vans = [];
+  this.observers = [[], []];
   this.occured = [];
 }
 
 Subject.prototype = {
   on: function(name, context, fn) {
-    for (const i in this.observers) {
-      if (this.observers[i]['name'] === name) return;
+    for (const i in this.observers[0]) {
+      if (this.observers[0][i]['name'] === name) return;
     }
     const observer = {};
     observer['name'] = name;
     observer['callback'] = fn.bind(context);
-    this.observers.push(observer);
+    this.observers[0].push(observer);
   },
   once: function(name, context, fn) {
-    for (const i in this.vans) {
-      if (this.vans[i]['name'] === name) return;
+    for (const i in this.observers[1]) {
+      if (this.observers[1][i]['name'] === name) return;
     }
     const vans = {};
     vans['name'] = name;
     vans['callback'] = fn.bind(context);
-    this.vans.push(vans);
+    this.observers[1].push(vans);
   },
   unsubscribe: function(name) {
     for (const i in this.observers) {
-      if (this.observers[i]['name'] === name) {
-        this.observers.splice(i, 1);
-        return;
-      }
-    }
-    for (const i in this.vans) {
-      if (this.vans[i]['name'] === name) {
-        this.vans.splice(i, 1);
+      for (const j in this.observers[i]) {
+        if (this.observers[i][j]['name'] === name) {
+          this.observers.splice(i, 1);
+          return;
+        }
       }
     }
   },
   unsubscribeAll: function() {
-    this.observers.splice(0);
+    this.observers.forEach(item => item.splice(0));
   },
   count: function() {
-    return this.observers.length;
+    return this.observers[0].length + this.observers[1].length;
   },
   send: function(name, data) {
     for (const i in this.observers) {
-      if (this.observers[i]['name'] === name) {
-        const fn = this.observers[i]['callback'];
-        fn(data);
-        return;
-      }
-    }
-    for (const i in this.vans) {
-      if (this.vans[i]['name'] === name) {
-        const fn = this.vans[i]['callback'];
-        fn(data);
-        this.unsubscribe(name);
+      for (const j in this.observers[i]) {
+        if (this.observers[i][j]['name'] === name) {
+          const fn = this.observers[i][j]['callback'];
+          fn(data);
+          if (i === '1') this.unsubscribe(name);
+          return;
+        }
       }
     }
   }
@@ -90,6 +82,6 @@ Obs2.once('notify', null, function(data) {
 Obs1.send('square');
 Obs2.send('move');
 
-console.log(Obs2);
-Obs2.send('notify', 'notification');
-console.log(Obs2);
+console.log(Obs2.observers[1]);
+Obs2.send('notify', 'first');
+Obs2.send('notify', 'second');
