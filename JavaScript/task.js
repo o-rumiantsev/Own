@@ -69,29 +69,14 @@ const Rect = {
   width: 50
 }
 
-const Obs1 = new Subject();
-const Obs2 = new Subject();
+const Obs = new Subject();
 
-Obs1.on('square', Rect, function() {
-  this.square = this.height * this.width;
+Obs.limited('info', Rect, 2000, () => {
+  console.log(Rect);
 });
 
-Obs2.once('notify', null, function(data) {
-  console.log(data);
-});
-
-Obs1.limited('move', Rect, 5000, function(x, y) {
-  this.x += x;
-  this.y += y;
-});
-
-console.log(Obs1.observers[0]);
-
-Obs1.send('move', 10, 10);
-console.log(Rect);
+Obs.send('info');
 
 setTimeout(() => {
-  Obs1.send('move', 100, 100);
-  console.log(Rect);
-  console.log(Obs1.observers[0]);
-}, 6000)
+  Obs.send('info');
+}, 3000);
