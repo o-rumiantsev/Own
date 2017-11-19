@@ -2,7 +2,6 @@
 
 const Subject = function() {
   this.observers = [[], []];
-  this.occured = [];
 }
 
 Subject.prototype = {
