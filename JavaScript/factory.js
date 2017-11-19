@@ -1,11 +1,13 @@
 'use strict';
 
+const types = require('./types.js');
+
 const Subject = function() {
   this.observers = [[], []];
-}
+};
 
 Subject.prototype = {
-  on: function(name, context, fn) {
+  on(name, context, fn) {
     for (const i in this.observers[0]) {
       if (this.observers[0][i]['name'] === name) return;
     }
@@ -14,7 +16,7 @@ Subject.prototype = {
     observer['callback'] = fn.bind(context);
     this.observers[0].push(observer);
   },
-  once: function(name, context, fn) {
+  once(name, context, fn) {
     for (const i in this.observers[1]) {
       if (this.observers[1][i]['name'] === name) return;
     }
@@ -23,30 +25,31 @@ Subject.prototype = {
     vans['callback'] = fn.bind(context);
     this.observers[1].push(vans);
   },
-  limited: function(name, context, timeout, fn) {
+  limited(name, context, timeout, fn) {
     this.on(name, context, fn);
     const Observer = this;
     setTimeout(function() {
-      Observer.unsubscribe(name)
+      Observer.unsubscribe(name);
     }, timeout);
   },
-  unsubscribe: function(name) {
+  unsubscribe(name) {
     for (const i in this.observers) {
       for (const j in this.observers[i]) {
         if (this.observers[i][j]['name'] === name) {
           this.observers[i].splice(j, 1);
+          console.log('unsubscribed from: ' + name);
           return;
         }
       }
     }
   },
-  unsubscribeAll: function() {
+  unsubscribeAll() {
     this.observers.forEach(item => item.splice(0));
   },
-  count: function() {
+  count() {
     return this.observers[0].length + this.observers[1].length;
   },
-  send: function(name, ...args) {
+  send(name, ...args) {
     for (const i in this.observers) {
       for (const j in this.observers[i]) {
         if (this.observers[i][j]['name'] === name) {
@@ -58,38 +61,24 @@ Subject.prototype = {
       }
     }
   }
-  
-}
-const Observe = function(type, context, time) {
+
+};
+
+exports.observe = function(type, path, obj, interval) {
   const Obs = new Subject();
-  let ctx = JSON.stringify(context);
-  Obs.on('change', context, function() {
-    console.log(
-      'Changed to:\n' + JSON.stringify(this, null, 2).replace(/"/g, '')
-    );
-  })
-  setInterval(function() {
-    if (ctx !== JSON.stringify(context)) {
-      Obs.send('change');
-      ctx = JSON.stringify(context);
+  switch (type) {
+    case 'file': {
+      console.log('subscribed on: ' + path);
+      const Observer = types.file(Obs, path, obj, interval);
+      return Observer;
     }
-  }, 1000);
-  return Obs;
-}
-
-// <------------- Usage ------------->
-
-const Rect = {
-  x: 10,
-  y: 20,
-  height: 180,
-  width: 50
-}
-
-const obs = Observe('log', Rect);
-
-Rect.x += 10;
-
-setTimeout(() => {
-  Rect.height = 100;
-}, 5000);
+    case 'object': {
+      console.log(
+        'subscribed on object: ' + JSON.stringify(obj, null, 2)
+                                       .replace(/"/g, '')
+      );
+      const Observer = types.object(Obs, obj, interval);
+      return Observer;
+    }
+  }
+};
