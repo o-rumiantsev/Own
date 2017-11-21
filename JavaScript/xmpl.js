@@ -1,17 +1,8 @@
 'use strict';
 
-const obs = new Set;
+const add = (a, b) => a + b;
+const sum = (a, b, callback) => callback(a, b);
 
-const f = function() {
-  console.log('Function in!');
-}
+console.log('Use add: ' + add(5, 2));
 
-obs.add(f);
-obs.add(() => {
-  console.log('huiambda');
-});
-
-for (const i of obs) {
-  const fn = i;
-  fn();
-}
+sum(5, 2, add);

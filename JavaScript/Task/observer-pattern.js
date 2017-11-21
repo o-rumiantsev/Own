@@ -10,9 +10,9 @@ const Publisher = function() {
 };
 
 Publisher.prototype.send = function(data) {
-  this.observers.forEach(fn => fn(data));
+  this.observers.forEach(fn => fn.call(this, data));
   this.onceObservers.forEach(fn => {
-    fn(data);
+    fn.call(this, data);
     this.onceObservers.delete(fn);
   });
   return this;
@@ -28,13 +28,18 @@ Publisher.prototype.count = function() {
   return this.observers.size + this.onceObservers.size;
 };
 
+// Uasge
+
 const pub = new Publisher();
 const lisher = new Publisher();
 
 const fn = wrap.observer('notificator');
 const f = wrap.observer('logger');
+const fnc = wrap.observer();
 
 fn.on(pub).once(lisher);
 f.once(pub).on(lisher);
+fnc.limited(pub, 1000).once(lisher);
+console.dir({ pub });
 
-pub.send('info').unsubscribeAll();
+pub.send('info');

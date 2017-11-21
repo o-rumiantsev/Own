@@ -25,18 +25,8 @@ Function.prototype.limited = function(publisher, timeout) {
 
 Function.prototype.unsubscribe = function(publisher) {
   const fn = this;
-  publisher.observers.forEach(observer => {
-    if (observer === fn) {
-      publisher.observers.delete(fn);
-      return;
-    }
-  });
-  publisher.onceObservers.forEach(observer => {
-    if (observer === fn) {
-      publisher.onceObservers.delete(fn);
-      return;
-    }
-  });
+  publisher.observers.delete(fn)
+  publisher.onceObservers.delete(fn);
   return this;
 };
 
@@ -52,11 +42,17 @@ const observer = function(type) {
     case 'logger': {
       fn = (data) => {
         const time = new Date().toString();
-        fs.writeFile('./log', `${time}: ${data}\n`, { flag: 'a' }, (err) => {
+        const log = `${time}: ${data};\n`;
+        fs.writeFile('./log', log, { flag: 'a' }, (err) => {
           if (err) throw err;
         });
       };
       break;
+    }
+    default: {
+      fn = function(data) {
+        console.log(data, this);
+      };
     }
   }
   return fn;
