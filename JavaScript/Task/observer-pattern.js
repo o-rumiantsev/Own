@@ -7,7 +7,7 @@
 const Publisher = function() {
   this.observers = new Set();
   this.onceObservers = new Set();
-}
+};
 
 Publisher.prototype.send = function(data) {
   this.observers.forEach(fn => fn(data));
@@ -16,7 +16,7 @@ Publisher.prototype.send = function(data) {
     this.onceObservers.delete(fn);
   });
   return this;
-}
+};
 
 Publisher.prototype.unsubscribeAll = function() {
   this.observers.clear();
@@ -43,7 +43,7 @@ Function.prototype.once = function(publisher) {
 Function.prototype.limited = function(publisher, timeout) {
   this.on(publisher);
   const Observer = this;
-  setTimeout(function() {
+  setTimeout(() => {
     Observer.unsubscribe(publisher);
   }, timeout);
   return this;
@@ -74,7 +74,7 @@ const fn = (data) => {
   console.log('fn: ' + data);
 };
 const f = (data) => {
-  console.log('f: ' + data)
+  console.log('f: ' + data);
 };
 
 fn.on(pub).once(lisher);
