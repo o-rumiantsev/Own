@@ -40,6 +40,6 @@ const fnc = wrap.observer();
 fn.on(pub).once(lisher);
 f.once(pub).on(lisher);
 fnc.limited(pub, 1000).once(lisher);
-console.dir({ pub });
 
 pub.send('info');
+lisher.send('notification');

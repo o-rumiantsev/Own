@@ -1,8 +1,57 @@
 'use strict';
 
-const add = (a, b) => a + b;
-const sum = (a, b, callback) => callback(a, b);
+// const http = require('http');
+const net = require('net');
 
-console.log('Use add: ' + add(5, 2));
+const server = net.createServer((socket) => {
+  socket.end('goodbye\n');
+}).on('error', (err) => {
+  throw err
+});
 
-sum(5, 2, add);
+server.on('connetction', (socket) => {
+  console.log('Client connected');
+});
+
+server.listen(() => {
+  console.log(server.address());
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+// const server = http.createServer((req, res) => {
+//   res.end();
+// });
+//
+// server.listen({
+//   host: 'localhost',
+//   port: 0
+// });
+//
+// server.on();

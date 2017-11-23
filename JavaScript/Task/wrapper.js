@@ -33,29 +33,25 @@ Function.prototype.unsubscribe = function(publisher) {
 // Wrapper
 
 const observer = function(type) {
-  let fn;
   switch (type) {
     case 'notificator': {
-      fn = (data) => console.log(data);
-      break;
+      return (data) => console.log(data);
     }
     case 'logger': {
-      fn = (data) => {
+      return (data) => {
         const time = new Date().toString();
         const log = `${time}: ${data};\n`;
         fs.writeFile('./log', log, { flag: 'a' }, (err) => {
           if (err) throw err;
         });
       };
-      break;
     }
     default: {
-      fn = function(data) {
+      return function(data) {
         console.log(data, this);
       };
     }
   }
-  return fn;
 };
 
 module.exports = {
