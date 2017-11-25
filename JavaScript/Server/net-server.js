@@ -4,10 +4,12 @@ const net = require('net');
 
 const sockets = new Set();
 const server = net.createServer((socket) => {
-
+  sockets.forEach((sckt) => {
+    sckt.write(`${socket.remotePort} connected\n`);
+  });
   socket.setEncoding('utf8');
   socket.on('data', (data) => {
-    sockets.forEach((sckt) =>{
+    sockets.forEach((sckt) => {
       sckt.write(`📨  ${socket.remotePort}: ` + data);
     });
   });
@@ -23,6 +25,7 @@ const server = net.createServer((socket) => {
 });
 
 server.listen(8080);
+console.log(server.address());
 server.on('error', (err) => {
   throw err;
 });
