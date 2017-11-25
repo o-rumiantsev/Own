@@ -7,7 +7,9 @@ const last = arr => arr[arr.length - 1];
 const asyncify = fn => (...args) => {
   const callback = last(args);
   args.pop();
-  callback(null, fn(...args));
+  process.nextTick(() => {
+    callback(null, fn(...args));
+  });
 };
 
 // Asynchronous functions
