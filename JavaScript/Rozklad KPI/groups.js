@@ -22,7 +22,7 @@ const getTimetable = (id) => {
   });
 }
 
-// encode kytylic symbols
+// encode kyrylic symbols
 
 const encode = (string) => {
   const stringEnc = encodeURIComponent(string.toLowerCase());
