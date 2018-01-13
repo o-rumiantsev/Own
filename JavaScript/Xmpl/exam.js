@@ -1,5 +1,21 @@
 'use strict';
 
+// Task
+//
+//
+/*
+1 - Function, which gets an array of undefined
+    depth, and makes it flat(all functions
+    replaces with its result).
+
+2 - Function `clear()` which gets an array and
+    removes all `null` and `undefined` from it.
+
+3 - Function, which wraps another funtion and
+    returns its memoized version.
+    Prints incomming arguments and result every call.
+*/
+
 // 1
 //
 //
@@ -53,7 +69,6 @@ const memoize = fn => {
 // Usage
 //
 //
-
 const notFlat = ['hello', ['1', 2, [false, () => 10, ['yes', 'no'], Math.pi]]];
 
 flatify = memoize(flatify);
