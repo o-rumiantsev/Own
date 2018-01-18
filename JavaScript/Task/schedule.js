@@ -1,5 +1,9 @@
-(callback) => {
-  const URL_API_TEACHERS = 'https://api.rozklad.org.ua/v2/teachers';
+const schedule = (callback) => {
+  const { URL } = require('url');
+  const https = require('https');
+  const metasync = require('metasync');
+
+  const URL_API_TEACHERS = 'https://api.rozklad.org.ua/v2/teachers/';
   const ITEMS_PER_PAGE = 100;
 
   const teachersSubjects = new Map();
@@ -8,12 +12,15 @@
   getTeachers(0);
 
   function getTeachers(offset) {
-    const url = new api.url.URL(URL_API_TEACHERS);
-    url.search = `?filter={"offset":${offset}}`;
+    const url = new URL(URL_API_TEACHERS);
+    url.searchParams.set('filter', `{"offset":${offset}}`);
 
-    api.https.get(url, (res) => {
+    https.get(url, (res) => {
       if (res.statusCode !== 200) {
-        application.log.error(res.statusMessage);
+        console.log('fuck');
+        // application.log.error(
+        //   `In lib schedule getTeachers ${url.href}: ${res.statusMessage}`
+        // );
         callback(res.statusMessage);
         return;
       }
@@ -22,6 +29,7 @@
 
       res.on('data', (data) => rawData.push(data));
       res.on('end', () => {
+        console.log('ok');
         const parsed = JSON.parse(rawData.join(''));
         const teachers = [];
 
@@ -37,18 +45,20 @@
 
         offset += ITEMS_PER_PAGE;
         if (teachers.length === ITEMS_PER_PAGE) getTeachers(offset);
-        else api.metasync(sequence)({}, () => callback(teachersSubjects));
+        else metasync(sequence)({}, () => callback(teachersSubjects));
       });
     });
   }
 
   function getGroups(teacher, callback) {
-    const url = new api.url.URL(URL_API_TEACHERS);
+    const url = new URL(URL_API_TEACHERS);
     url.pathname += `/${teacher}/lessons`;
-
-    api.https.get(url, (res) => {
+    console.log(teacher);
+    https.get(url, (res) => {
       if (res.statusCode !== 200) {
-        application.log.error(res.statusMessage);
+        // application.log.error(
+        //   `In lib schedule getGroups ${url.href}: ${res.statusMessage}`
+        // );
         callback(null);
         return;
       }
@@ -69,13 +79,27 @@
   function addNewGroups(subjects, data) {
     data.forEach((lesson) => {
       const subject = lesson.lesson_full_name;
-      const groups = subjects.get(subject) || new Set();
+      let groups = subjects.get(subject);
+
+      if (!groups) {
+        groups = new Set();
+        subjects.set(subject, groups);
+      }
 
       lesson.groups.forEach(
         groupName => groups.add(groupName.group_full_name)
       );
-
-      if (!subject.has(subject)) subjects.set(subject, groups);
+      console.clear();
+      console.log(teachersSubjects.size);
     });
   }
-}
+};
+
+let map1 = null;
+
+schedule((s) => {
+  map1 = s;
+  schedule((s) => {
+    setTimeout(() => console.log(map1.size, s.size), 1000);
+  });
+});
