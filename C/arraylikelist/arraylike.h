@@ -13,5 +13,6 @@ void swap(list *, int, int);
 void list_clear(list *);
 void print_list(list *);
 int list_len(list *);
+list *map(list *, int (*)(int));
 
 #endif

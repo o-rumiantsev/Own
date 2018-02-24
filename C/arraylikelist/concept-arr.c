@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "arraylike.h"
 
+int fn(int);
+
 int main() {
   list *l = init(10);
   push(l, 20);
@@ -38,4 +40,17 @@ int main() {
 
   list_clear(ls);
   print_list(ls);
+
+  printf("\n");
+  swap(l, 0, 10);
+  print_list(l);
+
+  int (*f)(int) = &fn;
+  list *new_ls = map(l, f);
+  print_list(new_ls);
+}
+
+int fn(int item) {
+  if ((item / 10) % 2 == 1) return item;
+  else return 0;
 }

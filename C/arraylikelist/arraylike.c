@@ -115,6 +115,8 @@ void list_clear(list *ls) {
   node *tmp = ls->root;
   node *next = tmp->next;
   while (next) {
+    tmp->data = 0;
+    tmp->next = NULL;
     free(tmp);
     tmp = next;
     next = next->next;
@@ -122,7 +124,7 @@ void list_clear(list *ls) {
   ls->len = 0;
 }
 
-//
+// Swap two nodes
 //
 //
 void swap(list *ls, int index1, int index2) {
@@ -177,4 +179,19 @@ void print_list(list *ls) {
 //
 int list_len(list *l) {
   return l->len;
+}
+
+// Iterate list
+//
+//
+list *map(list *l, int (*fn)(int)) {
+  node *tmp = l->root;
+  list *ls = init((*fn)(tmp->data));
+  tmp = tmp->next;
+  for (int i = 1; i < l->len; ++i){
+    int data = (*fn)(tmp->data);
+    push(ls, data);
+    tmp = tmp->next;
+  }
+  return ls;
 }
