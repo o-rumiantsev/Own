@@ -6,8 +6,10 @@ typedef struct list_s list;
 
 list *init(int);
 list *from_array(int *, int);
+int *to_array(list *);
 void push(list *, int);
 void insert(list *, int, int);
+list *slice(list *, int, int);
 void node_remove(list *, int);
 void swap(list *, int, int);
 void list_clear(list *);

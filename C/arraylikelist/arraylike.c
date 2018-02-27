@@ -65,6 +65,19 @@ list *from_array(int *arr, int len) {
   return l;
 };
 
+// Convert list to array
+//
+//
+int *to_array(list *l) {
+  int *arr = (int *)calloc(l->len, sizeof(int));
+  node *nd = l->root;
+  while (nd) {
+    arr[nd->index] = nd->data;
+    nd = nd->next;
+  }
+  return arr;
+}
+
 // Get list node by index
 //
 //
@@ -90,6 +103,22 @@ void insert(list *ls, int index, int data) {
   tmp->data = data;
   _inc_after(tmp);
   ++ls->len;
+}
+
+// Get slice from list
+//
+//
+list *slice(list *ls, int start, int end) {
+  node *nd = ls->root;
+  if (start > ls->len || start <= end) return init(0);
+
+  while (nd->index != start) nd = nd->next;
+  list *l = init(nd->data);
+  while (nd && nd->index != end) {
+    push(l, nd->data);
+    nd = nd->next;
+  }
+  return l;
 }
 
 // Remove node with
