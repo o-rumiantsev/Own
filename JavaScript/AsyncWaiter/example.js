@@ -29,14 +29,14 @@ const f3 = waiter(function *(all, curry) {
 
 f3(console.error); // Error: ENOENT: no such file or directory, open './not_existing_file.ext'
 
-const f4 = waiter(function *(all, curry) {
+const f4 = waiter(function *(all) {
   const filesdata = yield all([
     (context, cb) =>
       fs.readFile('./waiter.js', (err, buffer) => cb(err, { waiter: buffer })),
     (context, cb) =>
       fs.readFile('./example.js', (err, buffer) =>
         cb(err, { example: buffer })
-      ),
+      )
   ]);
 
   return filesdata;

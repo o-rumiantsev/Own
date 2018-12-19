@@ -12,14 +12,14 @@ const all = (fns, context = {}) => callback => {
   for (const fn of fns) {
     const cb = (err, res) => {
       if (err) {
-        cb(err);
+        callback(err);
         return;
       }
       Object.assign(context, res);
       if (++counter === length) callback(null, context);
     };
     const args = [cb];
-    if (fn.length >= 2) args.unshift(context);
+    if (fn.length === 2) args.unshift(context);
     fn(...args);
   }
 };
