@@ -5,18 +5,38 @@ const curry = fn =>
     fn.length > args.length ?
      curry(fn.bind(null, ...args)) : fn(...args);
 
-const waiter = fn => cb => {
-  const generator = fn(curry);
-  const iteration = generator.next();
+const all = (fns, context) => callback => {
+  const length = fns.length;
+  let counter = 0;
+
+  for (const fn of fns) {
+    const cb = (err, res) => {
+      if (err) {
+        cb(err);
+        return;
+      }
+      Object.assign(context, res);
+      if (++counter === length) cb(null, context);
+    };
+    const args = [cb];
+    if (fn.length >= 2) args.unshift(context);
+    fn(...args);
+  }
+};
+
+const waiter = generator => cb => {
+  const iterator = generator(all, curry);
+  const iteration = iterator.next();
 
   const next = iteration => {
     const { value: f } = iteration;
     f((err, result) => {
       if (err) {
-        generator.throw(err);
+        cb(err);
+        iterator.return();
         return;
       }
-      iteration = generator.next(result);
+      iteration = iterator.next(result);
       if (iteration.done) cb(null, iteration.value);
       else next(iteration);
     });
