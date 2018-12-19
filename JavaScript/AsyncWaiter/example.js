@@ -27,5 +27,19 @@ const f3 = waiter(function *(all, curry) {
   return data;
 });
 
-f3(console.log); // Error: ENOENT: no such file or directory, open './not_existing_file.ext'
+f3(console.error); // Error: ENOENT: no such file or directory, open './not_existing_file.ext'
 
+const f4 = waiter(function *(all, curry) {
+  const filesdata = yield all([
+    (context, cb) =>
+      fs.readFile('./waiter.js', (err, buffer) => cb(err, { waiter: buffer })),
+    (context, cb) =>
+      fs.readFile('./example.js', (err, buffer) =>
+        cb(err, { example: buffer })
+      ),
+  ]);
+
+  return filesdata;
+});
+
+f4(console.log);

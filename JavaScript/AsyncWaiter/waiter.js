@@ -5,7 +5,7 @@ const curry = fn =>
     fn.length > args.length ?
      curry(fn.bind(null, ...args)) : fn(...args);
 
-const all = (fns, context) => callback => {
+const all = (fns, context = {}) => callback => {
   const length = fns.length;
   let counter = 0;
 
@@ -16,7 +16,7 @@ const all = (fns, context) => callback => {
         return;
       }
       Object.assign(context, res);
-      if (++counter === length) cb(null, context);
+      if (++counter === length) callback(null, context);
     };
     const args = [cb];
     if (fn.length >= 2) args.unshift(context);
